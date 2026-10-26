@@ -37,5 +37,8 @@ table 50110 "MC Customer"
         {
             Clustered = true;
         }
+        key(Key2; "Email")
+        {
+        }
     }
 }
