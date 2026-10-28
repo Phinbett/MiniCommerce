@@ -1,4 +1,4 @@
-codeunit 50111 "MC Customer Events"
+codeunit 50132 "MC Customer Events"
 {
     // Event subscriber
     [EventSubscriber(

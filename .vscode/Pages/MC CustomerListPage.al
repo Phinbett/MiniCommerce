@@ -1,4 +1,4 @@
-page 50110 "MC Customer List"
+page 50120 "MC Customer List"
 {
     PageType = List;
     ApplicationArea = All;

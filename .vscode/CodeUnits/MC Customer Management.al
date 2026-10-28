@@ -1,4 +1,4 @@
-codeunit 50110 "MC Customer Management"
+codeunit 50131 "MC Customer Management"
 {
     // Explicit business operation
     procedure UpdateCustomer(var Customer: Record "MC Customer"; NewName: Text[100]; NewEmail: Text[100]; NewPhoneNo: Text[30])

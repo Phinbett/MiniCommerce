@@ -1,4 +1,4 @@
-table 50115 "MC Sales Order Line"
+table 50113 "MC Sales Order Line"
 {
     DataClassification = ToBeClassified;
 
@@ -28,6 +28,10 @@ table 50115 "MC Sales Order Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(8; "Order Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -37,4 +41,12 @@ table 50115 "MC Sales Order Line"
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    var
+        NoSeries: Codeunit "No. Series";
+    begin
+        if "Line No." = '' then
+            "Line No." := NoSeries.GetNextNo('MC-SALES-ORDER-LINE', WorkDate(), true);
+    end;
 }

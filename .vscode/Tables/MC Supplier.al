@@ -1,4 +1,4 @@
-table 50111 "MC Supplier"
+table 50115 "MC Supplier"
 {
     DataClassification = ToBeClassified;
 
@@ -46,4 +46,25 @@ table 50111 "MC Supplier"
         {
         }
     }
+
+    fieldGroups
+    {
+        fieldGroup(DropDown; "No.", Name)
+        {
+        }
+        fieldGroup(Brick; "No.", Name)
+        {
+        }
+    }
+
+    trigger OnInsert()
+    var
+        NoSeries: Codeunit "No. Series";
+    begin
+        if "No." = '' then begin
+            "No." := NoSeries.GetNextNo('MC-SUPPLIER', WorkDate(), true);
+            if "No." = '' then
+                Error('The Number Series "MC-SUPPLIER" is not set up correctly.');
+        end;
+    end;
 }

@@ -1,4 +1,4 @@
-page 50112 "MC Product Category List"
+page 50122 "MC Product Category List"
 {
     PageType = List;
     ApplicationArea = All;
@@ -11,13 +11,16 @@ page 50112 "MC Product Category List"
         {
             repeater(General)
             {
-                field("No."; rec."No.")
+                field("No."; Rec."No.")
                 {
                 }
-                field("Name"; rec."Name")
+                field("Name"; Rec."Name")
                 {
                 }
-                field("Description"; rec."Description")
+                field("Description"; Rec."Description")
+                {
+                }
+                field("Active"; Rec."Active")
                 {
                 }
             }
@@ -28,18 +31,37 @@ page 50112 "MC Product Category List"
         }
     }
 
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        ProductCategoryManagement: Codeunit "MC Product Category Management";
+    begin
 
-                trigger OnAction()
-                begin
+        // if not Dialog.Confirm(
+        //     'Create product category %1?',
+        //     false,
+        //     Rec.Name)
+        // then
+        //     exit(false);
 
-                end;
-            }
-        }
-    }
+        ProductCategoryManagement.CreateProductCategory(
+            Rec.Name,
+            Rec.Description,
+            Rec.Active);
+
+        exit(false);
+    end;
+
+    trigger OnDeleteRecord(): Boolean
+    var
+        ProductCategoryManagement: Codeunit "MC Product Category Management";
+    begin
+        if not Dialog.Confirm(
+            'Delete product category %1?',
+            false,
+            Rec."No.")
+        then
+            exit(false);
+        ProductCategoryManagement.DeleteProductCategory(Rec."No.");
+        exit(true);
+    end;
 }

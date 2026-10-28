@@ -1,4 +1,4 @@
-table 50112 "MC Product Category"
+table 50111 "MC Product Category"
 {
     DataClassification = ToBeClassified;
 
@@ -19,6 +19,11 @@ table 50112 "MC Product Category"
             DataClassification = ToBeClassified;
 
         }
+        field(4; "Active"; boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
 
     }
 
@@ -29,4 +34,22 @@ table 50112 "MC Product Category"
             Clustered = true;
         }
     }
+
+    fieldgroups
+    {
+        fieldgroup(DropDown; "No.", Name)
+        {
+        }
+        fieldgroup(Brick; "No.", Name)
+        {
+        }
+    }
+
+    trigger OnInsert()
+    var
+        NoSeries: Codeunit "No. Series";
+    begin
+        if "No." = '' then
+            "No." := NoSeries.GetNextNo('MC-PRODUCT-CATEGORY', WorkDate(), true);
+    end;
 }

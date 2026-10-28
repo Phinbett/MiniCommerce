@@ -34,4 +34,12 @@ table 50114 "MC Sales Order"
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    var
+        NoSeries: Codeunit "No. Series";
+    begin
+        if "No." = '' then
+            "No." := NoSeries.GetNextNo('MC-SALES-ORDER', WorkDate(), true);
+    end;
 }

@@ -51,4 +51,15 @@ table 50110 "MC Customer"
         {
         }
     }
+
+    trigger OnInsert()
+    var
+        NoSeries: Codeunit "No. Series";
+    begin
+        if "NO." = '' then begin
+            "NO." := NoSeries.GetNextNo('MC-CUSTOMER', WorkDate(), true);
+            if "NO." = '' then
+                Error('The Number Series "MC-CUSTOMER" is not set up correctly.');
+        end;
+    end;
 }
