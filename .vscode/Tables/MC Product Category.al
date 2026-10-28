@@ -19,6 +19,7 @@ table 50112 "MC Product Category"
             DataClassification = ToBeClassified;
 
         }
+
     }
 
     keys

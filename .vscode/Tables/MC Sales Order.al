@@ -16,6 +16,10 @@ table 50114 "MC Sales Order"
         {
             DataClassification = ToBeClassified;
         }
+        field(4; "Status"; Enum "MC Order Status")
+        {
+            DataClassification = ToBeClassified;
+        }
         field(6; "Order Date"; Date)
         {
             DataClassification = ToBeClassified;

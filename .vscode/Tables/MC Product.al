@@ -13,6 +13,12 @@ table 50113 "MC Product"
         {
             DataClassification = ToBeClassified;
 
+            trigger OnValidate()
+            begin
+                if "Name" = '' then
+                    Error('Product Name cannot be empty.');
+            end;
+
         }
         field(3; "Description"; text[250])
         {
@@ -33,10 +39,22 @@ table 50113 "MC Product"
         {
             DataClassification = ToBeClassified;
 
+            trigger OnValidate()
+            begin
+                if "Unit Price" < 0 then
+                    Error('Unit Price cannot be negative.');
+            end;
+
         }
         field(7; "Inventory"; Integer)
         {
             DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            begin
+                if "Inventory" < 0 then
+                    Error('Inventory cannot be negative.');
+            end;
 
         }
         field(8; "Active"; boolean)

@@ -13,11 +13,21 @@ table 50111 "MC Supplier"
         {
             DataClassification = ToBeClassified;
 
+            trigger OnValidate()
+            begin
+                if "Name" = '' then
+                    Error('Supplier Name cannot be empty.');
+            end;
         }
         field(3; "Email"; text[100])
         {
             DataClassification = ToBeClassified;
 
+            trigger OnValidate()
+            begin
+                if "Email" = '' then
+                    Error('Supplier Email cannot be empty.');
+            end;
         }
         field(4; "Phone No."; text[30])
         {
