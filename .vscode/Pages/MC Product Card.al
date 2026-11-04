@@ -9,59 +9,94 @@ page 50121 "MC Product Card"
     {
         area(Content)
         {
-            group(Details)
+            group(General)
             {
-                field("No."; rec."No.")
-                {
+                Caption = 'General';
 
+                field("No."; Rec."No.")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
                 }
-                field("Name"; rec."Name")
-                {
 
+                field(Name; Rec.Name)
+                {
+                    ApplicationArea = All;
                 }
-                field("Description"; rec."Description")
-                {
 
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
                 }
-                field("Category No."; rec."Category No.")
-                {
 
+                field("Category No."; Rec."Category No.")
+                {
+                    ApplicationArea = All;
                 }
-                field("Supplier No."; rec."Supplier No.")
-                {
 
+                field("Supplier No."; Rec."Supplier No.")
+                {
+                    ApplicationArea = All;
                 }
-                field("Unit Price"; rec."Unit Price")
-                {
+            }
 
+            group(Pricing)
+            {
+                Caption = 'Pricing';
+
+                field("Unit Price"; Rec."Unit Price")
+                {
+                    ApplicationArea = All;
                 }
-                field("Inventory"; rec."Inventory")
-                {
+            }
 
+            group(Inventory)
+            {
+                Caption = 'Inventory';
+
+                field("Inventory Qty"; Rec.Inventory)
+                {
+                    ApplicationArea = All;
                 }
-                field("Active"; rec."Active")
-                {
 
+                field(Active; Rec.Active)
+                {
+                    ApplicationArea = All;
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(ProductStatistics; "MC Product Statistics")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
-
     actions
     {
         area(Processing)
         {
-            action(ActionName)
+            action(CalculateSales)
             {
+                ApplicationArea = All;
+                Caption = 'Calculate Sales';
+                Image = Calculate;
 
                 trigger OnAction()
+                var
+                    ProductManagement: Codeunit "MC Product Management";
+                    SalesAmount: Decimal;
                 begin
+                    SalesAmount :=
+                        ProductManagement.CalculateProductSales(Rec."No.");
 
+                    Message(
+                        'Product %1 has generated %2 in sales.',
+                        Rec.Name,
+                        SalesAmount);
                 end;
             }
         }
     }
-
-    var
-        myInt: Integer;
 }
