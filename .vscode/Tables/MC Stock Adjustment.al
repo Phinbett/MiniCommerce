@@ -46,11 +46,11 @@ table 50141 "MC Stock Adjustment"
             "Posting Date" := WorkDate();
     end;
 
-    trigger OnModify()
-    begin
-        if xRec.Status = xRec.Status::Posted then
-            Error('A posted stock adjustment cannot be modified.');
-    end;
+    // trigger OnModify()
+    // begin
+    //     if xRec.Status = xRec.Status::Posted then
+    //         Error('A posted stock adjustment cannot be modified.');
+    // end;
 
     trigger OnDelete()
     begin
