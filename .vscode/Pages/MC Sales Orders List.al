@@ -4,6 +4,7 @@ page 50124 "MC Sales Orders List"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "MC Sales Order";
+    CardPageId = "MC Sales Order Card";
 
     layout
     {
@@ -36,21 +37,6 @@ page 50124 "MC Sales Orders List"
         area(Factboxes)
         {
 
-        }
-    }
-
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
         }
     }
 }

@@ -10,14 +10,15 @@
             "serverInstance": "BC",
             "port": 7049,
             "authentication": "UserPassword",
-            "startupObjectId": 50122,
+            "startupObjectId": 50142,
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
             "tenant": "default",
-            "usePublicURLFromServer": true
+            "usePublicURLFromServer": true,
+            "schemaUpdateMode": "ForceSync"
         }
     ]
 }

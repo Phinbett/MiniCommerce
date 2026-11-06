@@ -1,52 +1,103 @@
 table 50113 "MC Sales Order Line"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
-        field(1; "Sales Order No."; code[20])
+        field(1; "Sales Order No."; Code[20])
         {
+            DataClassification = CustomerContent;
             TableRelation = "MC Sales Order"."No.";
         }
-        field(2; "Line No."; code[20])
+
+        field(2; "Line No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
         }
-        field(4; "Product No."; code[20])
+
+        field(3; "Product No."; Code[20])
         {
+            DataClassification = CustomerContent;
             TableRelation = "MC Product"."No.";
+
+            trigger OnValidate()
+            var
+                Product: Record "MC Product";
+            begin
+                if "Product No." = '' then
+                    exit;
+
+                if not Product.Get("Product No.") then
+                    Error('Product %1 does not exist.', "Product No.");
+
+                Description := Product.Name;
+                Validate("Unit Price", Product."Unit Price");
+            end;
         }
-        field(5; "Quantity"; Integer)
+
+        field(4; Description; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
+
+        field(5; Quantity; Integer)
+        {
+            DataClassification = CustomerContent;
+
+            trigger OnValidate()
+            begin
+                if Quantity <= 0 then
+                    Error('Quantity must be greater than zero.');
+
+                CalculateLineAmount();
+            end;
+        }
+
         field(6; "Unit Price"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
+
+            trigger OnValidate()
+            begin
+                if "Unit Price" < 0 then
+                    Error('Unit Price cannot be negative.');
+
+                CalculateLineAmount();
+            end;
         }
+
         field(7; "Line Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
+
         field(8; "Order Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
+
         }
     }
 
     keys
     {
-        key(Key1; "Sales Order No.", "Line No.")
+        key(PK; "Sales Order No.", "Line No.")
         {
             Clustered = true;
         }
+
+        key(ProductKey; "Product No.")
+        {
+        }
     }
 
-    trigger OnInsert()
-    var
-        NoSeries: Codeunit "No. Series";
+    local procedure CalculateLineAmount()
     begin
-        if "Line No." = '' then
-            "Line No." := NoSeries.GetNextNo('MC-SALES-ORDER-LINE', WorkDate(), true);
+        "Line Amount" := Quantity * "Unit Price";
+    end;
+
+    trigger OnInsert()
+    begin
+        if "Order Date" = 0D then
+            "Order Date" := WorkDate();
     end;
 }

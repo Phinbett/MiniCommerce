@@ -14,15 +14,22 @@ table 50114 "MC Sales Order"
         }
         field(5; "Total Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            Caption = 'Total Amount';
+            FieldClass = FlowField;
+
+            CalcFormula = Sum(
+        "MC Sales Order Line"."Line Amount"
+        WHERE("Sales Order No." = FIELD("No."))
+    );
         }
-        field(4; "Status"; Enum "MC Order Status")
+        field(4; "Status"; Enum "MC Sales Order Status")
         {
             DataClassification = ToBeClassified;
         }
         field(6; "Order Date"; Date)
         {
             DataClassification = ToBeClassified;
+
         }
 
     }
@@ -41,5 +48,8 @@ table 50114 "MC Sales Order"
     begin
         if "No." = '' then
             "No." := NoSeries.GetNextNo('MC-SALES-ORDER', WorkDate(), true);
+
+        if "Order Date" = 0D then
+            "Order Date" := WorkDate();
     end;
 }

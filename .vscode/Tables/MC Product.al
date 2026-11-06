@@ -48,16 +48,17 @@ table 50112 "MC Product"
             end;
         }
 
-        field(7; "Inventory"; Integer)
-        {
-            DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                if Inventory < 0 then
-                    Error('Inventory cannot be negative.');
-            end;
+        field(7; Inventory; Decimal)
+        {
+            Caption = 'Inventory';
+            FieldClass = FlowField;
+
+            CalcFormula = sum("MC Inventory Entry".Quantity
+        where("Product No." = field("No.")));
+            Editable = false;
         }
+
 
         field(8; "Active"; Boolean)
         {
