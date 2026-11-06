@@ -92,6 +92,30 @@ page 50127 "MC Sales Order Card"
                 end;
 
             }
+            action(Post)
+            {
+                Caption = 'Post';
+                ApplicationArea = All;
+                Image = Post;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                Enabled = Rec.Status = Rec.Status::Released;
+
+                trigger OnAction()
+                var
+                    SalesPosting: Codeunit "MC Sales Order Management";
+                begin
+                    if not Confirm('Do you want to post this sales order?') then
+                        exit;
+
+                    SalesPosting.PostSalesOrder(Rec."No.");
+
+                    CurrPage.Update(false);
+
+                    Message('Sales order %1 has been posted successfully.', Rec."No.");
+                end;
+            }
         }
     }
 }

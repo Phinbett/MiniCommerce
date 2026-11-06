@@ -49,7 +49,7 @@ table 50112 "MC Product"
         }
 
 
-        field(7; Inventory; Decimal)
+        field(7; Inventory; Integer)
         {
             Caption = 'Inventory';
             FieldClass = FlowField;

@@ -31,7 +31,7 @@ table 50140 "MC Inventory Entry"
             Caption = 'Posting Date';
         }
 
-        field(4; "Document No."; Code[20])
+        field(4; "Document No."; Text[20])
         {
             Caption = 'Document No.';
         }
